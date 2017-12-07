@@ -7,22 +7,18 @@ Example:
     {% snippet "organization/snippets/organization_list.html" %}
 
 #}
-{# <script>
-	var e;
-	function s(){ e = 1111 }
-	function a(){ e = 2222 }
-</script>
-<div class="row">
-  <button onclick="s()">Flat</button>
-  <button onclick="a()">Hierarchy</button>
-</div>
- #}
+
 <div id="publisher-tree">
-     {% if c.q %}
-     	{% set top_nodes = h.group_tree_highlight(organizations, h.group_tree(type_='organization')) %}
-     {% else %}
-     	{% set top_nodes = h.group_tree(organizations=organizations, type_='organization') %}
-     {% endif %}
-     {% snippet 'organization/snippets/organization_flat.html', top_nodes=top_nodes, use_longnames=True, organizations=organizations %}
+  {% if c.q %}
+    {% set top_nodes = h.group_tree_highlight(organizations, h.group_tree(type_='organization')) %}
+  {% else %}
+    {% set top_nodes = h.group_tree(organizations=organizations, type_='organization') %}
+  {% endif %}
+
+  {% if request.params.hierarchy == 'true' %}
+    {% snippet 'organization/snippets/organization_tree.html', top_nodes=top_nodes, use_longnames=True, organizations=organizations %}
+  {% else %}
+    {% snippet 'organization/snippets/organization_flat.html', top_nodes=top_nodes, use_longnames=True, organizations=organizations %}
+  {% endif %}
 </div>
 
