@@ -1,19 +1,18 @@
 {% resource 'hierarchy/hierarchy_theme.css' %}
 {% resource 'hierarchy/jquery.hierarchy.js' %}
 
-<ul class="hierarchy-tree-top">
-  {% for o in organizations %}
-    {% set longname = h.group_tree_get_longname(o.name) %} 
-    {% set display_text = o.title %} 
+<ul class="hierarchy-flat">
+  {% for node in organizations %}
+    {% set longname = h.group_tree_get_longname(node.name) %}
+    {% set display_text = node.title %}
     {% if use_longnames and longname%}
-        {% set display_text = longname + " (" + display_text + ")" %}
+      {% set display_text = longname + " (" + display_text + ")" %}
     {% endif %} 
-    {% if o.highlighted %}
-        <li class="highlighted" id="node_{{ o.name }}">
-    {% else %}
-        <li id="node_{{ o.name }}">
-    {% endif %}
-    {% link_for display_text, controller='organization', action='read', id=o.name %}
+    <li id="node_{{ node.name }}">
+      {% link_for display_text, controller='organization_hierarchy', action='index', id=node.name %}
+      {% if node.name in top_orgs_list %}
+        <span> (Top level)</span>
+      {% endif %}
     </li>
   {% endfor %}
 </ul>

@@ -5,6 +5,7 @@
 {% set search_class = search_class if search_class else 'search-giant' %}
 {% set no_bottom_border = no_bottom_border if no_bottom_border else false %}
 {% set form_id = form_id if form_id else false %}
+{% set page_num=c.page.page  %}
 
 <form {% if form_id %}id="{{ form_id }}" {% endif %}class="search-form{% if no_bottom_border %} no-bottom-border{% endif %}" method="get" data-module="select-switch">
   <div class="search-input control-group {{ search_class }}">
@@ -24,29 +25,34 @@
     {% endif %}
     </h2>
   {% endif %}
-  {% if request.params.hierarchy != 'true' %}
-    {% if sorting %}
-      <div class="form-select control-group control-order-by">
-        <label for="field-order-by">{{ _('Order by') }}</label>
-        <select id="field-order-by" name="sort">
-          {% for label, value in sorting %}
-            {% if label and value %}
-              <option value="{{ value }}"{% if sorting_selected == value %} selected="selected"{% endif %}>{{ label }}</option>
-            {% endif %}
-          {% endfor %}
-        </select>
-        {% block search_sortby_button %}
-          <button class="btn js-hide" type="submit">{{ _('Go') }}</button>
-        {% endblock %}
-      </div>
-    {% endif %}
-  {% endif %}
 
-  <div class="row">
-    <span>View: </span>
-    {# <a href="/organization">Flat</a>
-    <a href="/organization?hierarchy=true">Hierarchy</a> #}
-    <input type="checkbox" id="toggle-view">
+  <div class="filter-row">
+    <div class="toggle-view">
+      <span>View: </span>
+      <div>
+        <a href="/organization" class="toggle-view-btn {% if request.params.hierarchy != 'true' %}active{% endif %}">Flat</a>
+        <a href="/organization?hierarchy=true" class="toggle-view-btn {% if request.params.hierarchy == 'true' %}active{% endif %}">Hierarchy</a>
+      </div>
+    </div>
+
+    {% if request.params.hierarchy != 'true' %}
+      {% if sorting %}
+        <div class="form-select control-group control-order-by">
+          <label for="field-order-by">{{ _('Order by') }}</label>
+          <select id="field-order-by" name="sort">
+            {% for label, value in sorting %}
+              {% if label and value %}
+                <option value="{{ value }}"{% if sorting_selected == value %} selected="selected"{% endif %}>{{ label }}</option>
+              {% endif %}
+            {% endfor %}
+          </select>
+          <input type="hidden" value="{{ page_num }}" name="page">
+          {% block search_sortby_button %}
+            <button class="btn js-hide" type="submit">{{ _('Go') }}</button>
+          {% endblock %}
+        </div>
+      {% endif %}
+    {% endif %}
   </div>
 
   {% if facets %}
