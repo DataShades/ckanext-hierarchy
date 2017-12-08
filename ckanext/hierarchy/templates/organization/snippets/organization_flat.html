@@ -9,7 +9,7 @@
       {% set display_text = longname + " (" + display_text + ")" %}
     {% endif %} 
     <li id="node_{{ node.name }}">
-      {% link_for display_text, controller='organization_hierarchy', action='index', id=node.name %}
+      <a href="/organization/{{node.name}}">{{ display_text }}</a>
       {% if node.name in top_orgs_list %}
         <span> (Top level)</span>
       {% endif %}

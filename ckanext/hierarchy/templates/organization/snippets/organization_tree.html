@@ -26,7 +26,7 @@ Example:
           {% set display_text = longname + " (" + display_text + ")" %}
       {% endif %} 
       <li id="node_{{ node.name }}">
-      {% link_for display_text, controller='organization', action='read', id=node.name %}
+      <a href="/organization/{{node.name}}">{{ display_text }}</a>
       {% if node.children %}
         <ul class="hierarchy-tree"> {{ loop(node.children) }} </ul>
       {% endif %}
