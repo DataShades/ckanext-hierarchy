@@ -1,0 +1,18 @@
+{% resource 'hierarchy/hierarchy_theme.css' %}
+{% resource 'hierarchy/jquery.hierarchy.js' %}
+
+<ul class="hierarchy-flat">
+  {% for node in organizations %}
+    {% set longname = h.group_tree_get_longname(node.name) %}
+    {% set display_text = node.title %}
+    {% if use_longnames and longname%}
+      {% set display_text = longname + " (" + display_text + ")" %}
+    {% endif %} 
+    <li id="node_{{ node.name }}">
+      <a href="/organization/{{node.name}}">{{ display_text }}</a>
+      {% if node.name in top_orgs_list %}
+        <span> (Top level)</span>
+      {% endif %}
+    </li>
+  {% endfor %}
+</ul>
