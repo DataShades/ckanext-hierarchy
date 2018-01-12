@@ -25,15 +25,69 @@ ul.hierarchy-tree li:last-child {
     background: #fff url(images/lastnode.png) no-repeat;
 }
 
-ul.hierarchy-tree-top li a, ul.hierarchy-tree li a{
-     font-weight: 400;
-     color: hsl(194, 72%, 34%);
+ul.hierarchy-tree-top li a, ul.hierarchy-tree li a, ul.hierarchy-flat li a {
+     font-weight: 500;
+     color: #004485;
 }
 
-ul.hierarchy-tree-top li.highlighted > a, ul.hierarchy-tree li.highlighted > a {
+ul.hierarchy-tree-top li.highlighted > a, ul.hierarchy-tree li.highlighted > a, ul.hierarchy-flat li.highlighted > a {
      font-weight: 700;
-     color: hsl(194, 90%, 30%);
-     /*text-decoration: underline;*/
+     color: #004485;
      text-shadow: 1px 1px #dddddd;
 }
 
+ul.hierarchy-flat {
+     list-style: none;
+     margin-left: 0;
+}
+
+ul.hierarchy-flat li span {
+     font-size: 12px;
+     font-weight: 700;
+}
+
+.filter-row {
+     overflow: hidden;
+     margin-top: 20px;
+}
+
+.filter-row > .form-select.control-group.control-order-by {
+     margin-top: 0;
+}
+
+.toggle-view {
+     font-size: 15px;
+     float: left;
+}
+
+.toggle-view > span {
+     font-weight: 700;
+     padding-right: 5px;
+}
+
+.toggle-view > div {
+     display: inline-block;
+     border: 1px solid #bdbebf;
+     border-radius: 3px;
+     padding: 1px;
+}
+
+.toggle-view-btn {
+     display: inline-block;
+     color:  #004485;
+     font-weight: 400;
+     text-align: center;
+     width: 88px;
+     height: 34px;
+     line-height: 34px;
+     border-radius: 3px;
+}
+
+.toggle-view-btn.active, .toggle-view-btn:hover {
+     color:  #fff;
+     background-color:  #004485;
+}
+
+.toggle-view-btn:focus, .toggle-view-btn:hover {
+     text-decoration: none;
+}

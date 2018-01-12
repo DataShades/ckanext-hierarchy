@@ -4,6 +4,8 @@ from ckan.common import request
 
 def group_tree(organizations=[], type_='organization'):
     full_tree_list = p.toolkit.get_action('group_tree')({}, {'type': type_})
+    for org in full_tree_list:
+        org['top_level'] = True
 
     if not organizations:
         return full_tree_list
@@ -68,7 +70,6 @@ def group_tree_highlight(organizations, group_tree_list):
             traverse_highlight(child, name_list)
 
     selected_names = [ o.get('name',None) for o in organizations]
-    print(selected_names)
 
     for group in group_tree_list:
         traverse_highlight(group, selected_names)
@@ -89,4 +90,3 @@ def is_include_children_selected(fields):
     if request.params.get('include_children'):
         include_children_selected = True
     return include_children_selected
-

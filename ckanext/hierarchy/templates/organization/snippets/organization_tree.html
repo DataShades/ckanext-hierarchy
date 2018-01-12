@@ -25,12 +25,8 @@ Example:
       {% if use_longnames and longname%}
           {% set display_text = longname + " (" + display_text + ")" %}
       {% endif %} 
-      {% if node.highlighted %}
-          <li class="highlighted" id="node_{{ node.name }}">
-      {% else %}
-          <li id="node_{{ node.name }}">
-      {% endif %}
-      {% link_for display_text, controller='organization', action='read', id=node.name %}
+      <li id="node_{{ node.name }}">
+      <a href="/organization/{{node.name}}">{{ display_text }}</a>
       {% if node.children %}
         <ul class="hierarchy-tree"> {{ loop(node.children) }} </ul>
       {% endif %}

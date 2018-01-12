@@ -1,8 +1,35 @@
 {% ckan_extends %}
 
+{% block organizations_search_form %}
+  {% snippet 'organization/snippets/search_form.html', form_id='organization-search-form', type='organization', query=c.q, sorting_selected=c.sort_by_selected, count=c.page.item_count, placeholder=_('Search organizations...'), show_empty=request.params, no_bottom_border=true if c.page.items %}
+{% endblock %}
+
+{% block organizations_list %}
+  {% if c.page.items or request.params %}
+    {% if c.page.items %}
+      <div id="publisher-tree">
+        {% set top_nodes = h.group_tree(organizations=organizations, type_='organization') %}
+        {% if request.params.hierarchy == 'true' %}
+          {% snippet 'organization/snippets/organization_tree.html', top_nodes=top_nodes, use_longnames=True %}
+        {% else %}
+          {% snippet 'organization/snippets/organization_flat.html', use_longnames=True, organizations=c.page.items, top_orgs_list=top_orgs_list %}
+        {% endif %}
+      </div>
+    {% endif %}
+  {% else %}
+    <p class="empty">
+      {{ _('There are currently no organizations for this site') }}.
+      {% if h.check_access('organization_create') %}
+        {% link_for _('How about creating one?'), controller='organization', action='new' %}</a>.
+      {% endif %}
+    </p>
+  {% endif %}
+{% endblock %}
+
 <!-- JSTree is included, but so far does nothing. Need to encapsulate it in a
      'javascript module' -->
 {% block scripts %}
   {{ super() }}
   {% resource 'jstree/jquery.jstree.js' %}
+
 {% endblock %}
