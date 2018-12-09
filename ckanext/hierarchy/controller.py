@@ -37,7 +37,7 @@ class OrganizationHierarchy(OrganizationController):
         if not sort_by:
             sort_by = 'name asc'
 
-        page = self._get_page_number(request.params)
+        page = h.get_page_number(request.params)
 
         top_orgs_list = []
         top_orgs = model.Group.get_top_level_groups(type='organization')
