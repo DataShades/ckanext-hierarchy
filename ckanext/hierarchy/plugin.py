@@ -40,9 +40,9 @@ class HierarchyDisplay(p.SingletonPlugin):
     p.implements(p.IActions, inherit=True)
     p.implements(p.ITemplateHelpers, inherit=True)
     p.implements(p.IPackageController, inherit=True)
+    p.implements(p.IRoutes, inherit=True)
 
     # IConfigurer
-
     def update_config(self, config):
         p.toolkit.add_template_directory(config, 'templates')
         p.toolkit.add_template_directory(config, 'public')
@@ -50,7 +50,6 @@ class HierarchyDisplay(p.SingletonPlugin):
         p.toolkit.add_resource('fanstatic', 'hierarchy')
 
     # IActions
-
     def get_actions(self):
         return {'group_tree': action.group_tree,
                 'group_tree_section': action.group_tree_section,
@@ -67,6 +66,12 @@ class HierarchyDisplay(p.SingletonPlugin):
                 'is_include_children_selected': helpers.is_include_children_selected,
                 }
 
+    # IRoutes
+    def before_map(self, map):
+        map.connect('organization_hierarchy', '/organization',
+                    controller='ckanext.hierarchy.controller:OrganizationHierarchy',
+                    action='index')
+        return map
 
     # IPackageController
     # Modify the search query to include the datasets from
