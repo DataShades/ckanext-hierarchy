@@ -93,9 +93,10 @@ class HierarchyDisplay(p.SingletonPlugin):
         # fix the issues with multiple times repeated fields
         # remove the param from the fields
         new_fields = set()
-        for field,value in c.fields:
-            if (field != 'include_children'):
-                new_fields.add((field,value))
+        if hasattr(c, 'fields'):
+            for field,value in c.fields:
+                if (field != 'include_children'):
+                    new_fields.add((field,value))
         c.fields = list(new_fields)
 
         # parse the query string to check if children are requested
