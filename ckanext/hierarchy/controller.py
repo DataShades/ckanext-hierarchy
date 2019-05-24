@@ -46,6 +46,7 @@ class OrganizationHierarchy(OrganizationController):
                 'sort': sort_by,
                 'rows': 1000,
                 'all_fields': True,
+                'include_dataset_count': False
             })
 
         c.page = h.Page(
